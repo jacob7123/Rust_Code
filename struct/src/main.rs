@@ -68,7 +68,7 @@ fn main() {
      */
     let str1 = String::from("It is my string.");
     let x = MyString{text: str1.as_str()};
-
+    let s: &'static str = "I have a static lifetime";
 }
 
 // fn lifetime_example<'a, 'b>(x: &'a str, y: &'b str) -> &'a str{
