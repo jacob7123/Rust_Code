@@ -16,6 +16,12 @@ struct Course{
     author  : String,
 }
 
+impl Drop for Course{
+    fn drop(&mut self){
+        println!("Dropping {}", self.author);
+    }
+}
+
 struct AnotherCourse{
     headline: String,
     author  : String,
@@ -39,6 +45,27 @@ impl Overview for AnotherCourse {
 }
 
 impl Overview for DefaultCourse {}
+
+use std::ops::Add;
+#[derive(Debug)]
+
+struct Point<T>{
+    x: T,
+    y: T,
+}
+
+impl<T> Add for Point<T>
+    where
+    T: Add<Output = T>{
+        type Output = Self;
+        fn add(self, rhs: Self) -> Self{
+            Point{
+                x: self.x + rhs.x,
+                y: self.y + rhs.y,
+            }
+        }
+    }
+
 
 fn main() {
 
@@ -65,6 +92,24 @@ fn main() {
     call_overview(&c1);
     call_overview(&c2);
     call_overview(&c3);
+
+
+    /*
+        Drop
+     */
+    // drop(c1);
+
+    /*
+        Clone
+     */
+
+    /*
+        Operator Overloading
+     */
+    let crood1 = Point{x: 5.0, y: 5.0};
+    let crood2 = Point{x: 1.0, y: 2.0};
+    let sum = crood1 + crood2;
+    println!("{:?}", sum);
 
 
 }
