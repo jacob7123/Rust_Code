@@ -1,4 +1,5 @@
 use text_colorizer::*;
+use std::env;
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -10,7 +11,14 @@ struct Argument{
 }
 
 fn main() {
-    print_help();
+    // print_help();
+
+    let args: Vec<String> = env::args().skip(1).collect();
+    if args.len() != 4{
+        print_help();
+        eprintln!("{} wrong number of arguments give. Expected 4, got {}", "Error".red().bold(), args.len());
+        std::process::exit(1);
+    }
 }
 
 fn print_help(){
