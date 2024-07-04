@@ -19,9 +19,7 @@ fn print_help(){
 }
 
 fn replace(target: &str, rep: &str, data: &str) -> Result<String, regex::Error>{
-    let regex = Regex::new(target)?;
-    println!("{:?}",data);
-    println!("{:?}",rep);
+    let regex = Regex::new(target)?;  // ? operator is to allow for error propagation on functions that return a Result or an Option
     Ok(regex.replace_all(data, rep).to_string())
 }
 
