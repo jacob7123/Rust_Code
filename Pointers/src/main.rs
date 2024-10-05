@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 fn main() {
     /*
         Box is a smart pointer in Rust.
@@ -19,4 +21,17 @@ fn main() {
 
     assert_eq!(5, x);
     assert_eq!(5, *y);
+
+    /*
+        Reference Counting Pointer
+     */
+
+    let s1 = Rc::new(String::from("Jacob"));
+    let s2 = s1.clone();
+    let s3 = s2.clone();
+
+    println!("{}, {}, {}", s1, s2, s3);
+    println!("Reference count: {}", Rc::strong_count(&s1));
+
+    
 }
