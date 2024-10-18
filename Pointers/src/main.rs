@@ -1,5 +1,10 @@
 use std::rc::Rc;
+use std::cell::{Ref, RefCell};
 
+
+struct Flagger{
+    is_true: RefCell<bool>,
+}
 fn main() {
     /*
         Box is a smart pointer in Rust.
@@ -32,6 +37,26 @@ fn main() {
 
     println!("{}, {}, {}", s1, s2, s3);
     println!("Reference count: {}", Rc::strong_count(&s1));
+
+
+
+    /*
+        RefCell
+     */
+
+    let flag = Flagger{is_true:RefCell::new(true)};
+    // borrow return Ref<T>
+    // borrow_mut return RefMut<T>
+
+    // let reference = flag.is_true.borrow();
+    // println!("{}", reference);
+    // println!("{:?}", flag.is_true);
+
+    let mut reference_mut = flag.is_true.borrow_mut();
+    *reference_mut = false; // Dereference first to access inside
+    println!("{}", reference_mut);
+    println!("{:?}", flag.is_true);
+
 
     
 }
