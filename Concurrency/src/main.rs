@@ -1,3 +1,4 @@
+use std::rc::Rc;
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
@@ -81,7 +82,14 @@ fn main() {
     // }
 
     /*
-        Send and Sync
-     */
-    
+       Send and Sync
+    */
+
+    /* Rc is not thread safe, so it cannot send to thread. */
+    // let rc1 = Rc::new(String::from("Test")); // Use Arc::new(String::from("Test")
+    // let rc2 = rc1.clone();
+
+    // std::thread::spawn(move || {
+    //     rc2;
+    // });
 }
