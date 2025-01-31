@@ -1,7 +1,8 @@
-use std::rc::Rc;
-use std::sync::mpsc;
-use std::thread;
-use std::time::Duration;
+// use std::rc::Rc;
+// use std::sync::mpsc;
+// use std::thread;
+// use std::time::Duration;
+use std::sync::{Arc, Mutex};
 
 fn main() {
     /*
@@ -82,7 +83,7 @@ fn main() {
     // }
 
     /*
-       Send and Sync
+         Send and Sync
     */
 
     /* Rc is not thread safe, so it cannot send to thread. */
@@ -92,4 +93,25 @@ fn main() {
     // std::thread::spawn(move || {
     //     rc2;
     // });
+
+    /*
+        Shared State
+    */
+
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..8 {
+        let counter = Arc::clone(&counter);
+        let handle = std::thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("{}", counter.lock().unwrap());
 }
